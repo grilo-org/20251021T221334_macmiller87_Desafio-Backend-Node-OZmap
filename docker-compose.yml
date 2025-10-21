@@ -1,0 +1,22 @@
+services:
+
+  mongodb_app:
+    build: ./mongodb_rs
+    container_name: database_app
+    restart: always
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER_DOCKER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD_DOCKER}
+      - MONGO_INITDB_DATABASE=${MONGO_DATABASE_DOCKER}
+      - MONGO_REPLICA_HOST=${MONGO_REPLICA_HOST}
+      - MONGO_REPLICA_PORT=${MONGO_REPLICA_PORT}
+    networks:
+      - prisma-network
+
+networks:
+  prisma-network:
+    name: prisma-network

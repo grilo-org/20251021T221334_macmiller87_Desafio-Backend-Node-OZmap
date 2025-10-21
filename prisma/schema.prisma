@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Boxes {
+  mongoId String  @id @default(auto()) @map("_id") @db.ObjectId
+  entity  String
+  id      Int     @unique
+  name    String
+  type    String
+  coords  Float[]
+}
+
+model Customers {
+  mongoId String @id @default(auto()) @map("_id") @db.ObjectId
+  entity  String
+  id      Int    @unique
+  code    String
+  name    String
+  address String
+  box_id  Int
+}
+
+model Cables {
+  mongoId         String @id @default(auto()) @map("_id") @db.ObjectId
+  entity          String
+  id              Int    @unique
+  name            String
+  capacity        Int
+  boxes_connected Int[]
+  path            Json
+}
+
+model DropCables {
+  mongoId     String @id @default(auto()) @map("_id") @db.ObjectId
+  entity      String
+  id          Int    @unique
+  name        String
+  box_id      Int
+  customer_id Int
+}
